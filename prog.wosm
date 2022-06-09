@@ -1,10 +1,13 @@
 program prog.wosm;
 
+      var{
+	 int char;
+       }
+
 begin
     if(1 > 2){}
     if(1 < 2){}else{}
     while(1 < 2){}
     goto stop;
     for(i = 0; 1 < 2 ; i = 1 + 1 - 1){}
-    a[1] = 1;
 end
