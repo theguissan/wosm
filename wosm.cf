@@ -1,0 +1,84 @@
+Program.    PROGRAM ::= "program" Ident ".wosm;" VARDECL CONSTDECL FUNCDECL BLOCKPROG;
+
+VDecl.      VARDECL ::= "var{" [VAR] "}";
+VDeclVoid.  VARDECL ::= ;
+
+Var.        VAR ::= TYPE Ident;
+VarAssig.   VAR ::= TYPE Ident "=" VALUE;
+VarV.       VAR ::= TYPE Ident "[" Integer "]";
+VarAssigV.  VAR ::= TYPE Ident "[" Integer "]=" VALUE;
+terminator  VAR ";";
+
+rules       TYPE ::= "int" | "double" | "char" | POINTER;
+
+PointerInt.     POINTER ::= "int" [AST];
+PointerDouble.  POINTER ::= "double" [AST];
+PointerChar.    POINTER ::= "char" [AST];
+
+Ast.            AST ::= "*";
+separator       AST "";
+
+
+CDecl.      CONSTDECL ::= "const{" [CONST] "}";
+CDeclVoid.  CONSTDECL ::= ;
+
+Const.      CONST ::= TYPE Ident "=" VALUE;
+terminator  CONST ";";
+
+rules       VALUE ::= Integer | Double | EXP;
+
+
+FDecl.      FUNCDECL ::= "function{" [FUNCTION] "}";
+FDeclVoid.  FUNCDECL ::= ;
+
+Function.   FUNCTION ::= RETURN Ident "()";
+FunctionP.  FUNCTION ::= RETURN Ident "(" [PARAM] ")";
+terminator  FUNCTION ";";
+
+rules       RETURN ::= "int" | "double" | "char" | "void";
+
+Param.      PARAM ::= TYPE Ident;
+separator   PARAM ",";
+
+
+BlockProg.  BLOCKPROG ::= "begin" [CMD] "end";
+
+rules       CMD ::= IF | IFELSE | WHILE | FOR | GOTO | ASSIGMENT;
+terminator  CMD "";
+
+If.         IF ::= "if(" COND "){" [CMD] "}";
+
+IfElse.     IFELSE ::= IF "else{" [CMD] "}";
+
+While.      WHILE ::= "while(" COND "){" [CMD] "}";
+
+For.        FOR ::= "for(" ASSIGMENT COND";" INCREMENT "){" [CMD] "}";
+
+Goto.       GOTO ::= "goto" Ident ";";
+
+Assigment.  ASSIGMENT ::= Ident "=" VALUE ";";
+AssigmentV. ASSIGMENT ::= Ident "[" Integer "]=" VALUE ";";
+
+Increment.  INCREMENT ::= Ident "=" VALUE;
+IncrementV. INCREMENT ::= ;
+
+Cond.       COND ::= LOGICEXP [LOGICEXP];
+
+rules       LOGICOP ::= "<" | "<=" | "==" | "!=" | ">=" | ">" | "&&" | "||";
+
+LogicExp.   LOGICEXP ::= VALUE LOGICOP VALUE;
+separator   LOGICEXP "&&";
+separator   LOGICEXP "||";
+
+Exp.        EXP ::= ARITEXP [ARITEXP];
+
+rules       ARITOP ::= "+" | "-" | "*" | "/";
+
+AritExp.    ARITEXP ::= VALUE ARITOP VALUE;
+separator   ARITEXP "+";
+separator   ARITEXP "-";
+separator   ARITEXP "*";
+separator   ARITEXP "/";
+
+comment "#";
+comment "/#" "#/";
